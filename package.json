@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-search-everywhere-plugin",
-	"version": "1.0.9",
-	"description": "Search Everywhere with pressing Double Shift like in IntelliJ",
+	"name": "doubleshift",
+	"version": "0.1.0",
+	"description": "Open command palette by pressing Double Shift like in IntelliJ",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
