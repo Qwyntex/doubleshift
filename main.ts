@@ -27,10 +27,13 @@ function simulateSearchHotkey(app:App, command:String){
 
 export default class SearchEverywherePlugin extends Plugin {
 	async onload() {
+		this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'open-better-commmand-palette'));
+		/*
 		if (existsSync("./../obsidian-better-command-palette")) {
 			this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'open-better-commmand-palette'));
 		} else {
 			this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'command-palette:open'));
 		}
+		*/
 	}
 }
