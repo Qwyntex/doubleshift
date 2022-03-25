@@ -1,7 +1,35 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Scope, Setting } from 'obsidian';
-import { existsSync }from 'fs';
+import { App, Plugin} from 'obsidian';
+import { DoubleshiftSettings} from './DoubleshiftSettings';
+
+interface Settings {
+	command: string;
+}
 
 let lastKeyupTime = 0;
+
+const DEFAULT_SETTINGS: Partial<Settings> = {
+	command: 'command-palette:open',
+}
+
+export default class Doubleshift extends Plugin {
+	settings: Settings;
+
+	async loadSettings(){
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+	}
+
+	async saveSettings(){
+	}
+
+	async onload() {
+
+		this.addSettingTab(new DoubleshiftSettings(this.app, this));
+
+		await this.loadSettings();
+		Object.assign(DEFAULT_SETTINGS, await this.loadData());
+		this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, this.settings.command));
+	}
+}
 
 function doubleshift(key:any, app:App, command:String){
 	if (key !== "Shift") {
@@ -10,30 +38,15 @@ function doubleshift(key:any, app:App, command:String){
 	}
 	if (Date.now() - lastKeyupTime < 500) {
 		lastKeyupTime = 0;
-		simulateSearchHotkey(app, command)
+		forSomeReasonThatOnlyWorksInADifferentMethodIHateJS(app, command);
 	} else {
 		lastKeyupTime = Date.now();
 	}
 }
 
-function random(app:App){
-
-}
-
-function simulateSearchHotkey(app:App, command:String){
+function forSomeReasonThatOnlyWorksInADifferentMethodIHateJS(app:App, command:String){
 	// @ts-ignore
-	app.commands.executeCommandById(command)
-}
-
-export default class SearchEverywherePlugin extends Plugin {
-	async onload() {
-		this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'open-better-command-palette'));
-		/*
-		if (existsSync("./../obsidian-better-command-palette")) {
-			this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'open-better-commmand-palette'));
-		} else {
-			this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, 'command-palette:open'));
-		}
-		*/
-	}
+	app.commands.executeCommandById(command);
+	// @ts-ignore
+	console.log(app.commands.commands);
 }
