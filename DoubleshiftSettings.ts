@@ -14,7 +14,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 		containerEl.empty();
 
-		new Setting(containerEl)
+		command: new Setting(containerEl)
 			.setName("Command")
 			.setDesc("The command executed when shift is pressed twice")
 			.addText((text) =>
@@ -29,13 +29,14 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Delay")
-			.setDesc("The maximum delay between two presses of the shift key in ms")
+			.setDesc("The maximum delay between two presses of the shift key in 1/10 of a second")
 			.setTooltip("depending on how fast you type a too high number might annoy you")
-			.addText(component => {
+			.addSlider( component => {
 				component
-					.setValue(String(this.plugin.settings.delay))
+					.setValue(this.plugin.settings.delay/10)
+					.setDynamicTooltip()
 					.onChange(async (value) => {
-						this.plugin.settings.delay = Number(value)
+						this.plugin.settings.delay = Number(value*10)
 					})
 			})
 	}
