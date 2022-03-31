@@ -1,12 +1,16 @@
 import Doubleshift from "./main";
-import { App, PluginSettingTab, Setting } from "obsidian";
-import {text} from "stream/consumers";
+import {commandSuggestion} from "./suggestModal";
+import {App, Command, FuzzySuggestModal, PluginSettingTab, Setting} from "obsidian";
 
 export class DoubleshiftSettings extends PluginSettingTab {
-	plugin: Doubleshift;
 
-	constructor(app: App, plugin: Doubleshift) {
-		super(app, plugin);    this.plugin = plugin;
+	plugin: Doubleshift;
+	commands: Command[];
+
+	constructor(app: App, plugin: Doubleshift, commands: Command[]) {
+		super(app, plugin);
+		this.plugin = plugin;
+		this.commands = commands;
 	}
 
 	display(): void {
@@ -26,6 +30,17 @@ export class DoubleshiftSettings extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			);
+
+		new Setting(containerEl)
+			.addSearch( component => {
+				component
+					.setPlaceholder(this.plugin.settings.command)
+					.setValue(this.plugin.settings.command)
+					.onChange(value => {
+						new commandSuggestion(this.app, this.plugin)
+					})
+
+			})
 	}
 
 }
