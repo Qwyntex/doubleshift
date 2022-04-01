@@ -27,7 +27,21 @@ export class DoubleshiftSettings extends PluginSettingTab {
 					.onClick(() => {
 						new commandSuggestion(this.app, this.plugin)
 					})
-			})
+			});
+    
+		new Setting(containerEl)
+			.setName("Delay")
+			.setDesc("The maximum delay between two presses of the shift key in 1/10 of a second")
+			.setTooltip("depending on how fast you type a too high number might annoy you")
+			.addSlider( component => {
+				component
+					.setValue(this.plugin.settings.delay/10)
+					.setDynamicTooltip()
+					.onChange(async (value) => {
+						this.plugin.settings.delay = Number(value*10)
+					})
+
+			});
 	}
 
 }
