@@ -16,11 +16,11 @@ const DEFAULT_SETTINGS: Partial<Settings> = {
 export default class Doubleshift extends Plugin {
 	settings: Settings;
 
-	async loadSettings(){
+	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
-	async saveSettings(){
+	async saveSettings() {
 	}
 
 	async onload() {
@@ -30,26 +30,22 @@ export default class Doubleshift extends Plugin {
 		await this.loadSettings();
 		Object.assign(DEFAULT_SETTINGS, await this.loadData());
 
-		this.registerDomEvent(window, 'keyup', (event) => doubleshift(event.key, this.app, this.settings.command, this.settings.delay));
+		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
 	}
-}
 
-function doubleshift(key:any, app:App, command:String, delay: number){
-	if (key !== "Shift") {
-		lastKeyupTime = 0;
-		return;
-	}
-	if (Date.now() - lastKeyupTime < delay) {
-		lastKeyupTime = 0;
-		forSomeReasonThatOnlyWorksInADifferentMethodIHateJS(app, command);
-	} else {
-		lastKeyupTime = Date.now();
-	}
-}
+	doubleshift(key: any) {
+		if (key !== "Shift") {
+			lastKeyupTime = 0;
+			return;
+		}
+		if (Date.now() - lastKeyupTime < this.settings.delay) {
+			lastKeyupTime = 0;
 
-function forSomeReasonThatOnlyWorksInADifferentMethodIHateJS(app:App, command:String){
-	// @ts-ignore
-	app.commands.executeCommandById(command);
-	// @ts-ignore
-	console.log(app.commands.commands);
+			// @ts-ignore
+			app.commands.executeCommandById(command);
+
+		} else {
+			lastKeyupTime = Date.now();
+		}
+	}
 }
