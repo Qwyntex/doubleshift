@@ -1,6 +1,6 @@
 import Doubleshift from "./main";
-import {commandSuggestion} from "./suggestModal";
-import {App, Command, FuzzySuggestModal, PluginSettingTab, Setting} from "obsidian";
+import {commandSuggestion} from "./CommandSuggestion";
+import {App, Command, PluginSettingTab, Setting} from "obsidian";
 
 export class DoubleshiftSettings extends PluginSettingTab {
 
@@ -32,14 +32,12 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.addSearch( component => {
+			.addButton( component => {
 				component
-					.setPlaceholder(this.plugin.settings.command)
-					.setValue(this.plugin.settings.command)
-					.onChange(value => {
+					.setButtonText("select command")
+					.onClick(() => {
 						new commandSuggestion(this.app, this.plugin)
 					})
-
 			})
 	}
 
