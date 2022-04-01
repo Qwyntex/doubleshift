@@ -21,17 +21,6 @@ export class DoubleshiftSettings extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Command")
 			.setDesc("The command executed when shift is pressed twice")
-			.addText((text) =>
-				text
-					.setPlaceholder("command-palette:open")
-					.setValue(this.plugin.settings.command)
-					.onChange(async (value) => {
-						this.plugin.settings.command = value;
-						await this.plugin.saveSettings();
-					})
-			);
-
-		new Setting(containerEl)
 			.addButton( component => {
 				component
 					.setButtonText("select command")
