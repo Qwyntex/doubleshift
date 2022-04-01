@@ -1,4 +1,4 @@
-import { Plugin} from 'obsidian';
+import { App, Plugin } from 'obsidian';
 import { DoubleshiftSettings} from './DoubleshiftSettings';
 
 interface Settings {
@@ -15,9 +15,12 @@ const DEFAULT_SETTINGS: Partial<Settings> = {
 
 export default class Doubleshift extends Plugin {
 	settings: Settings;
+	commands: Command[];
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		// @ts-ignore
+		this.commands = Object.values(this.app.commands.commands);
 	}
 
 	async saveSettings() {
@@ -25,12 +28,14 @@ export default class Doubleshift extends Plugin {
 
 	async onload() {
 
-		this.addSettingTab(new DoubleshiftSettings(this.app, this));
+		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
+
 
 		await this.loadSettings();
 		Object.assign(DEFAULT_SETTINGS, await this.loadData());
 
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
+
 	}
 
 	doubleshift(key: any) {

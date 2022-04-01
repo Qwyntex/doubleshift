@@ -1,12 +1,16 @@
 import Doubleshift from "./main";
-import { App, PluginSettingTab, Setting } from "obsidian";
-import {text} from "stream/consumers";
+import {commandSuggestion} from "./CommandSuggestion";
+import {App, Command, PluginSettingTab, Setting} from "obsidian";
 
 export class DoubleshiftSettings extends PluginSettingTab {
-	plugin: Doubleshift;
 
-	constructor(app: App, plugin: Doubleshift) {
-		super(app, plugin);    this.plugin = plugin;
+	plugin: Doubleshift;
+	commands: Command[];
+
+	constructor(app: App, plugin: Doubleshift, commands: Command[]) {
+		super(app, plugin);
+		this.plugin = plugin;
+		this.commands = commands;
 	}
 
 	display(): void {
@@ -14,19 +18,17 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 		containerEl.empty();
 
-		command: new Setting(containerEl)
+		new Setting(containerEl)
 			.setName("Command")
 			.setDesc("The command executed when shift is pressed twice")
-			.addText((text) =>
-				text
-					.setPlaceholder("command-palette:open")
-					.setValue(this.plugin.settings.command)
-					.onChange(async (value) => {
-						this.plugin.settings.command = value;
-						await this.plugin.saveSettings();
+			.addButton( component => {
+				component
+					.setButtonText("select command")
+					.onClick(() => {
+						new commandSuggestion(this.app, this.plugin)
 					})
-			);
-
+			});
+    
 		new Setting(containerEl)
 			.setName("Delay")
 			.setDesc("The maximum delay between two presses of the shift key in 1/10 of a second")
@@ -38,7 +40,8 @@ export class DoubleshiftSettings extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.delay = Number(value*10)
 					})
-			})
+
+			});
 	}
 
 }
