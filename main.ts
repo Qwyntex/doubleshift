@@ -1,4 +1,4 @@
-import { App, Plugin } from 'obsidian';
+import {Command, Plugin} from 'obsidian';
 import { DoubleshiftSettings} from './DoubleshiftSettings';
 
 interface Settings {
@@ -23,8 +23,11 @@ export default class Doubleshift extends Plugin {
 		this.commands = Object.values(this.app.commands.commands);
 	}
 
+	/*
 	async saveSettings() {
 	}
+
+	 */
 
 	async onload() {
 
@@ -32,7 +35,6 @@ export default class Doubleshift extends Plugin {
 
 
 		await this.loadSettings();
-		Object.assign(DEFAULT_SETTINGS, await this.loadData());
 
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
 
@@ -47,7 +49,7 @@ export default class Doubleshift extends Plugin {
 			lastKeyupTime = 0;
 
 			// @ts-ignore
-			app.commands.executeCommandById(command);
+			app.commands.executeCommandById(this.settings.command);
 
 		} else {
 			lastKeyupTime = Date.now();
