@@ -1,4 +1,4 @@
-import { App, Plugin} from 'obsidian';
+import { Plugin} from 'obsidian';
 import { DoubleshiftSettings} from './DoubleshiftSettings';
 
 interface Settings {
