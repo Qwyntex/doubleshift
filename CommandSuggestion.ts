@@ -1,5 +1,6 @@
-import {App, Command, FuzzySuggestModal} from "obsidian";
+import {App, Command, FuzzySuggestModal, Notice} from "obsidian";
 import Doubleshift from "./main"
+import { findCommand } from "./main"
 
 export class commandSuggestion extends FuzzySuggestModal<Command> {
 
@@ -16,14 +17,12 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 		return Object.values(this.plugin.commands);
 	}
 
-	getItemText(command: Command, type: boolean = true): string {
-		if (type){
-			return command.name;
-		}
-		return command.id;
+	getItemText(command: Command): string {
+		return command.name;
 	}
 
 	onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): void {
-		this.plugin.settings.command = this.getItemText(item, false);
+		this.plugin.settings.command = findCommand(this.getItemText(item));
+		new Notice(`pressing shift twice will now execute ${this.plugin.settings.command.id}`);
 	}
 }
