@@ -10,6 +10,7 @@ export function findCommand(a: string): Command{
 	Object.values(this.app.commands.commands).forEach( (command: Command) => {
 		if(command.id === a || command.name === a) {
 			console.log(command.name + ' with id ' + command.id);
+			if (command === null) console.log("AAAARG")
 			return command;
 		}
 	});
