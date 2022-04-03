@@ -20,12 +20,14 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Command")
-			.setDesc("The command executed when shift is pressed twice")
+			.setDesc("The command executed when shift is pressed twice.")
 			.addButton( component => {
 				component
 					.setButtonText("select command")
+					.setTooltip('current: ' + this.plugin.settings.command.name)
 					.onClick(() => {
 						new commandSuggestion(this.app, this.plugin)
+						component.setTooltip('current: ' + this.plugin.settings.command.name)
 					})
 			});
     

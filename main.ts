@@ -7,13 +7,15 @@ interface Settings {
 }
 
 export function findCommand(a: string): Command{
-	Object.values(this.app.commands.commands).forEach( (command: Command) => {
+	let commands = Object.values(this.app.commands.commands);
+	for (let i = 0; i < commands.length; i++) {
+		// @ts-ignore
+		let command: Command = commands[i];
 		if(command.id === a || command.name === a) {
 			console.log(command.name + ' with id ' + command.id);
-			if (command === null) console.log("AAAARG")
 			return command;
 		}
-	});
+	}
 	return null;
 }
 
@@ -40,10 +42,7 @@ export default class Doubleshift extends Plugin {
 
 	async onload() {
 
-
 		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
-
-
 		await this.loadSettings();
 
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
