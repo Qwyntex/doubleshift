@@ -23,6 +23,7 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 
 	onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): void {
 		this.plugin.settings.command = findCommand(this.getItemText(item));
+		this.plugin.saveSettings();
 		new Notice(`pressing shift twice will now execute ${this.plugin.settings.command.name}`);
 	}
 }

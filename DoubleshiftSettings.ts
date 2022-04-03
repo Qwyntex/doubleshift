@@ -24,10 +24,10 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			.addButton( component => {
 				component
 					.setButtonText("select command")
-					.setTooltip('current: ' + this.plugin.settings.command.name)
+					.setTooltip(this.plugin.settings.command.name)
 					.onClick(() => {
-						new commandSuggestion(this.app, this.plugin)
-						component.setTooltip('current: ' + this.plugin.settings.command.name)
+						new commandSuggestion(this.app, this.plugin);
+						component.setTooltip(this.plugin.settings.command.name);
 					})
 			});
     
@@ -41,6 +41,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 					.setDynamicTooltip()
 					.onChange(async (value) => {
 						this.plugin.settings.delay = Number(value*10)
+						this.plugin.saveSettings();
 					})
 
 			});

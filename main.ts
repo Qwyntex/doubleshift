@@ -35,10 +35,11 @@ export default class Doubleshift extends Plugin {
 		this.commands = Object.values(this.app.commands.commands);
 	}
 
-	/*
+
 	async saveSettings() {
+		await this.saveData(this.settings);
 	}
-	 */
+
 
 	async onload() {
 
@@ -58,7 +59,7 @@ export default class Doubleshift extends Plugin {
 			this.lastKeyupTime = 0;
 
 			// @ts-ignore
-			app.commands.executeCommandById(this.settings.command);
+			app.commands.executeCommandById(this.settings.command.id);
 
 		} else {
 			this.lastKeyupTime = Date.now();
