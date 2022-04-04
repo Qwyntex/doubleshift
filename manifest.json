@@ -1,10 +1,10 @@
 {
 	"id": "obsidian-doubleshift",
 	"name": "Doubleshift",
-	"version": "1.5.0",
+	"version": "1.7.0",
 	"minAppVersion": "0.12.0",
-	"description": "Open command palette by pressing Double Shift like in IntelliJ",
+	"description": "Open the command palette by pressing Double Shift like in IntelliJ",
 	"author": "Qwyntex",
 	"authorUrl": "https://github.com/Qwyntex",
-	"isDesktopOnly": true
+	"isDesktopOnly": false
 }
