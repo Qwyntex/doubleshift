@@ -12,7 +12,6 @@ export function findCommand(a: string): Command{
 		// @ts-ignore
 		let command: Command = commands[i];
 		if(command.id === a || command.name === a) {
-			console.log(command.name + ' with id ' + command.id);
 			return command;
 		}
 	}
