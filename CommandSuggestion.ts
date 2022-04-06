@@ -9,7 +9,7 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 	constructor(app: App, plugin: Doubleshift) {
 		super(app);
 		this.plugin = plugin;
-		this.setPlaceholder(this.plugin.settings.command.name);
+		this.setPlaceholder(findCommand(this.plugin.settings.command).name);
 		this.open();
 	}
 
@@ -22,8 +22,9 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 	}
 
 	onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): void {
-		this.plugin.settings.command = findCommand(this.getItemText(item));
+		let command = findCommand(this.getItemText(item));
+		this.plugin.settings.command = command.id;
 		this.plugin.saveSettings();
-		new Notice(`pressing shift twice will now execute ${this.plugin.settings.command.name}`);
+		new Notice(`pressing shift twice will now execute ${command.name}`);
 	}
 }

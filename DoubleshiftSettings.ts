@@ -1,4 +1,4 @@
-import Doubleshift from "./main";
+import Doubleshift, {findCommand} from "./main";
 import {commandSuggestion} from "./CommandSuggestion";
 import {App, Command, PluginSettingTab, Setting} from "obsidian";
 
@@ -22,12 +22,13 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			.setName("Command")
 			.setDesc("The command executed when shift is pressed twice.")
 			.addButton( component => {
+				let commandName = findCommand(this.plugin.settings.command).name;
 				component
 					.setButtonText("select command")
-					.setTooltip(this.plugin.settings.command.name)
+					.setTooltip(commandName)
 					.onClick(() => {
 						new commandSuggestion(this.app, this.plugin);
-						component.setTooltip(this.plugin.settings.command.name);
+						component.setTooltip(commandName);
 					})
 			});
     

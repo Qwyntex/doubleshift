@@ -2,7 +2,7 @@ import {Command, Plugin} from 'obsidian';
 import { DoubleshiftSettings} from './DoubleshiftSettings';
 
 interface Settings {
-	command: Command;
+	command: string;
 	delay: number;
 }
 
@@ -19,7 +19,7 @@ export function findCommand(a: string): Command{
 }
 
 const DEFAULT_SETTINGS: Partial<Settings> = {
-	command: findCommand('command-palette:open'),
+	command: 'command-palette:open',
 	delay: 500
 }
 
@@ -58,7 +58,7 @@ export default class Doubleshift extends Plugin {
 			this.lastKeyupTime = 0;
 
 			// @ts-ignore
-			app.commands.executeCommandById(this.settings.command.id);
+			app.commands.executeCommandById(this.plugin.settings.command);
 
 		} else {
 			this.lastKeyupTime = Date.now();
