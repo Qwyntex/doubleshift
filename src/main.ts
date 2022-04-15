@@ -1,5 +1,5 @@
 import {Command, Plugin} from 'obsidian';
-import { DoubleshiftSettings} from './DoubleshiftSettings';
+import { DoubleshiftSettings } from './DoubleshiftSettings';
 
 interface Settings {
 	command: string;
@@ -41,12 +41,9 @@ export default class Doubleshift extends Plugin {
 
 
 	async onload() {
-
-		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
 		await this.loadSettings();
-
+		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
-
 	}
 
 	doubleshift(key: any) {

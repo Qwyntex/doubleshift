@@ -2,7 +2,7 @@
 	"name": "doubleshift",
 	"version": "0.1.0",
 	"description": "Open command palette by pressing Double Shift like in IntelliJ",
-	"main": "main.js",
+	"main": "src/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
@@ -16,7 +16,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.2.0",
 		"@typescript-eslint/parser": "^5.2.0",
 		"builtin-modules": "^3.2.0",
-		"esbuild": "0.13.12",
+		"esbuild": "^0.13.12",
 		"obsidian": "^0.13.26",
 		"tslib": "2.3.1",
 		"typescript": "4.4.4"
