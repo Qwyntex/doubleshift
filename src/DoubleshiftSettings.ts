@@ -21,7 +21,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Delay")
-			.setDesc("The maximum delay between two presses of the shift key in 1/10 of a second")
+			.setDesc("The maximum delay between two presses of the respective key in 1/10 of a second")
 			.setTooltip("depending on how fast you type a too high number might annoy you")
 			.addSlider( component => {
 				component
@@ -34,10 +34,13 @@ export class DoubleshiftSettings extends PluginSettingTab {
 
 			});
 
+		new Setting(containerEl)
+			.setName("Shortcuts")
+			.setDesc("all shortcuts you have currently set up")
+			.setHeading()
+			.setDisabled(true)
 		this.plugin.settings.shortcuts.forEach(shortcut => {
 			new Setting(containerEl)
-				.setName("Command")
-				.setDesc("The command executed when shift is pressed twice.")
 				.addText(component => {
 					component
 						.setValue(shortcut.key)
@@ -61,9 +64,10 @@ export class DoubleshiftSettings extends PluginSettingTab {
 				})
 				.addButton(component => {
 					component
-						.setIcon("X")
+						.setIcon("trash")
 						.onClick(() => {
 							this.plugin.settings.shortcuts.remove(shortcut);
+							this.plugin.saveSettings();
 							containerEl.empty();
 							this.display();
 						})
@@ -71,7 +75,6 @@ export class DoubleshiftSettings extends PluginSettingTab {
 		});
 
 		new Setting(containerEl)
-			.setName("Add shortcut")
 			.addButton(component => {
 				component
 					.setButtonText("Add")
