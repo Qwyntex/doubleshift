@@ -1,10 +1,12 @@
-import {Command, Notice, Plugin} from 'obsidian';
+import {Command, Plugin} from 'obsidian';
 import { DoubleshiftSettings } from './DoubleshiftSettings';
+import {Shortcut} from "./Shortcut";
 
 interface Settings {
 	command: string;
 	delay: number;
 	key: string;
+	shortcuts: Shortcut[];
 }
 
 export function findCommand(a: string): Command{
@@ -22,7 +24,12 @@ export function findCommand(a: string): Command{
 const DEFAULT_SETTINGS: Partial<Settings> = {
 	command: 'command-palette:open',
 	delay: 500,
-	key: 'Shift'
+	key: 'Shift',
+	shortcuts: [new class implements Shortcut {
+		command = 'command-palette:open';
+		key = 'Shift';
+		lastKeyUpTime = Date.now();
+	}]
 }
 
 export default class Doubleshift extends Plugin {
@@ -49,18 +56,20 @@ export default class Doubleshift extends Plugin {
 	}
 
 	doubleshift(key: any) {
-		if (key !== this.settings.key) {
-			this.lastKeyupTime = 0;
-			return;
-		}
-		if (Date.now() - this.lastKeyupTime < this.settings.delay) {
-			this.lastKeyupTime = 0;
+		this.settings.shortcuts.forEach(shortcut => {
+			if (key !== shortcut.key) {
+				shortcut.lastKeyUpTime = 0;
+				return;
+			}
+			if (Date.now() - shortcut.lastKeyUpTime < this.settings.delay) {
+				shortcut.lastKeyUpTime = 0;
 
-			// @ts-ignore
-			app.commands.executeCommandById(this.settings.command);
+				// @ts-ignore
+				app.commands.executeCommandById(shortcut.command);
 
-		} else {
-			this.lastKeyupTime = Date.now();
-		}
+			} else {
+				shortcut.lastKeyUpTime = Date.now();
+			}
+		})
 	}
 }
