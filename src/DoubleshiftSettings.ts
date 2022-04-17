@@ -1,6 +1,8 @@
 import Doubleshift, {findCommand} from "./main";
 import {commandSuggestion} from "./CommandSuggestion";
 import {App, Command, PluginSettingTab, Setting} from "obsidian";
+import {strict} from "assert";
+import {commands} from "codemirror";
 
 export class DoubleshiftSettings extends PluginSettingTab {
 
@@ -45,6 +47,18 @@ export class DoubleshiftSettings extends PluginSettingTab {
 						this.plugin.saveSettings();
 					})
 
+			});
+
+		new Setting(containerEl)
+			.setName("ModKey")
+			.setDesc("the key you want to press twice")
+			.addText(component => {
+				component
+					.setValue("Shift")
+					.setPlaceholder("Shift")
+					.onChange(value => {
+						this.plugin.settings.key = value;
+					})
 			});
 	}
 

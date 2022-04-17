@@ -1,9 +1,10 @@
-import {Command, Plugin} from 'obsidian';
+import {Command, Notice, Plugin} from 'obsidian';
 import { DoubleshiftSettings } from './DoubleshiftSettings';
 
 interface Settings {
 	command: string;
 	delay: number;
+	key: string;
 }
 
 export function findCommand(a: string): Command{
@@ -20,7 +21,8 @@ export function findCommand(a: string): Command{
 
 const DEFAULT_SETTINGS: Partial<Settings> = {
 	command: 'command-palette:open',
-	delay: 500
+	delay: 500,
+	key: 'Shift'
 }
 
 export default class Doubleshift extends Plugin {
@@ -47,7 +49,7 @@ export default class Doubleshift extends Plugin {
 	}
 
 	doubleshift(key: any) {
-		if (key !== "Shift") {
+		if (key !== this.settings.key) {
 			this.lastKeyupTime = 0;
 			return;
 		}
@@ -55,7 +57,7 @@ export default class Doubleshift extends Plugin {
 			this.lastKeyupTime = 0;
 
 			// @ts-ignore
-			app.commands.executeCommandById(this.plugin.settings.command);
+			app.commands.executeCommandById(this.settings.command);
 
 		} else {
 			this.lastKeyupTime = Date.now();
