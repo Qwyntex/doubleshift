@@ -28,6 +28,5 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 		let command = findCommand(this.getItemText(item));
 		this.shortcut.command = command.id;
 		this.plugin.saveSettings();
-		new Notice(`pressing shift twice will now execute ${command.name}`);
 	}
 }
