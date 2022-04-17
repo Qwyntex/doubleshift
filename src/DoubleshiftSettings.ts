@@ -54,7 +54,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			.setDesc("the key you want to press twice")
 			.addText(component => {
 				component
-					.setValue("Shift")
+					.setValue(this.plugin.settings.key)
 					.setPlaceholder("Shift")
 					.onChange(value => {
 						this.plugin.settings.key = value;
