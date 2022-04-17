@@ -58,6 +58,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 					.setPlaceholder("Shift")
 					.onChange(value => {
 						this.plugin.settings.key = value;
+						this.plugin.saveSettings();
 					})
 			});
 	}
