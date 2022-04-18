@@ -52,10 +52,10 @@ export default class Doubleshift extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
-		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
+		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.code));
 	}
 
-	doubleshift(key: any) {
+	doubleshift(key: string) {
 		this.settings.shortcuts.forEach(shortcut => {
 			if (key !== shortcut.key) {
 				shortcut.lastKeyUpTime = 0;
