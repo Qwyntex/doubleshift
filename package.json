@@ -1,7 +1,7 @@
 {
 	"name": "doubleshift",
-	"version": "0.1.0",
-	"description": "Open command palette by pressing Double Shift like in IntelliJ",
+	"version": "2.1.1",
+	"description": "Open command palette by pressing Double Shift like in IntelliJ and others keys can be configured too",
 	"main": "src/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
