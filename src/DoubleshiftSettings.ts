@@ -51,7 +51,9 @@ export class DoubleshiftSettings extends PluginSettingTab {
 						})
 				})
 				.addButton( component => {
-					let commandName = findCommand(shortcut.command).name;
+					let command = findCommand(shortcut.command);
+					if (command === null) return;
+					let commandName = command.name;
 					component
 						.setButtonText("select command")
 						.setTooltip(commandName)

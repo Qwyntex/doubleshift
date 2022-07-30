@@ -1,4 +1,4 @@
-import {App, Command, FuzzySuggestModal, Notice} from "obsidian";
+import {App, Command, FuzzySuggestModal} from "obsidian";
 import Doubleshift from "./main"
 import { findCommand } from "./main"
 import {Shortcut} from "./Shortcut";

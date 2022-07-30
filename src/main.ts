@@ -55,7 +55,7 @@ export default class Doubleshift extends Plugin {
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
 	}
 
-	doubleshift(key: any) {
+	doubleshift(key: string) {
 		this.settings.shortcuts.forEach(shortcut => {
 			if (key !== shortcut.key) {
 				shortcut.lastKeyUpTime = 0;

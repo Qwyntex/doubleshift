@@ -1,4 +1,5 @@
 import Doubleshift from "./main";
+import {commandSuggestion} from "./CommandSuggestion";
 
 
 export interface Shortcut{
@@ -9,10 +10,12 @@ export interface Shortcut{
 
 export class ShortcutCreator {
 	constructor(plugin: Doubleshift) {
-		plugin.settings.shortcuts.push(new class implements Shortcut {
-			command = "command-palette:open";
+		let shortcut = new class implements Shortcut {
+			command = ""
 			key = "Shift";
 			lastKeyUpTime = Date.now();
-		})
+		}
+		new commandSuggestion(plugin.app, plugin, shortcut);
+		plugin.settings.shortcuts.push(shortcut);
 	}
 }
