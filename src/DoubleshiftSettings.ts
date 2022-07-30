@@ -40,7 +40,8 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			.setHeading()
 			.setDisabled(true)
 		this.plugin.settings.shortcuts.forEach(shortcut => {
-			new Setting(containerEl)
+			let available = findCommand(shortcut.command) !== null;
+			let s = new Setting(containerEl)
 				.addText(component => {
 					component
 						.setValue(shortcut.key)
@@ -50,10 +51,13 @@ export class DoubleshiftSettings extends PluginSettingTab {
 							this.plugin.saveSettings();
 						})
 				})
-				.addButton( component => {
-					let command = findCommand(shortcut.command);
-					if (command === null) return;
-					let commandName = command.name;
+				.addButton(component => {
+					let commandName: string;
+					if (available) {
+						commandName = findCommand(shortcut.command).name;
+					} else {
+						commandName = ""
+					}
 					component
 						.setButtonText("select command")
 						.setTooltip(commandName)
@@ -74,6 +78,9 @@ export class DoubleshiftSettings extends PluginSettingTab {
 							this.display();
 						})
 				})
+			if (!available){
+				s.setDesc("the corresponding plugin has been disabled or uninstalled");
+			}
 		});
 
 		new Setting(containerEl)
