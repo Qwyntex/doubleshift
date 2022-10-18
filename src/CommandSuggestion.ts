@@ -12,7 +12,7 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 		super(app);
 		this.plugin = plugin;
 		this.shortcut = shortcut;
-		this.setPlaceholder(findCommand(this.plugin.settings.command).name);
+		this.setPlaceholder(findCommand(shortcut.command)?.name ?? shortcut.command);
 		this.open();
 	}
 

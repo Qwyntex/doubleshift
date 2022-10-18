@@ -3,7 +3,6 @@ import { DoubleshiftSettings } from './DoubleshiftSettings';
 import {Shortcut} from "./Shortcut";
 
 interface Settings {
-	command: string;
 	delay: number;
 	key: string;
 	shortcuts: Shortcut[];
@@ -22,7 +21,6 @@ export function findCommand(a: string): Command{
 }
 
 const DEFAULT_SETTINGS: Partial<Settings> = {
-	command: 'command-palette:open',
 	delay: 500,
 	key: 'Shift',
 	shortcuts: [new class implements Shortcut {
