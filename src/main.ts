@@ -33,7 +33,7 @@ const DEFAULT_SETTINGS: Partial<Settings> = {
 export default class Doubleshift extends Plugin {
 	settings: Settings;
 	commands: Command[];
-	lastKeyupTime: number;
+	settingsTab: DoubleshiftSettings;
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -49,7 +49,8 @@ export default class Doubleshift extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		this.addSettingTab(new DoubleshiftSettings(this.app, this, this.commands));
+		this.settingsTab = new DoubleshiftSettings(this.app, this, this.commands);
+		this.addSettingTab(this.settingsTab);
 		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
 	}
 

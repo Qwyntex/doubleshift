@@ -2,6 +2,7 @@ import {App, Command, FuzzySuggestModal} from "obsidian";
 import Doubleshift from "./main"
 import { findCommand } from "./main"
 import {Shortcut} from "./Shortcut";
+import {DoubleshiftSettings} from "./DoubleshiftSettings";
 
 export class commandSuggestion extends FuzzySuggestModal<Command> {
 
@@ -28,5 +29,6 @@ export class commandSuggestion extends FuzzySuggestModal<Command> {
 		let command = findCommand(this.getItemText(item));
 		this.shortcut.command = command.id;
 		this.plugin.saveSettings();
+		this.plugin.settingsTab.display();
 	}
 }

@@ -87,9 +87,9 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			.addButton(component => {
 				component
 					.setButtonText("Add")
-					.onClick(() => {
-						new ShortcutCreator(this.plugin);
-						this.plugin.saveSettings();
+					.onClick(async () => {
+						await new ShortcutCreator(this.plugin);
+						await this.plugin.saveSettings();
 						containerEl.empty();
 						this.display();
 					})
