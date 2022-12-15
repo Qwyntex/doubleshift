@@ -7,3 +7,5 @@ you can also add multiple other commands with different keys for whatever action
 It **works with every available command** including commands from other plugins. So if you have a plugin like the better command palette plugin installed you can choose the command to open it in the Doubleshift settings tab.
 
 If you want to contribute to this plugin feel free to create a pull request at https://github.com/Qwyntex/doubleshift
+
+For those wondering why a specific plugin or command doesn't show up in the command picker, try disableing and reenableing doubleshift in the community plugin settings tab
