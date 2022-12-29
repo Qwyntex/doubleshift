@@ -42,13 +42,12 @@ export class DoubleshiftSettings extends PluginSettingTab {
 		this.plugin.settings.shortcuts.forEach(shortcut => {
 			let available = findCommand(shortcut.command) !== null;
 			let s = new Setting(containerEl)
-				.addText(component => {
+				.addButton(component => {
 					component
-						.setValue(shortcut.key)
-						.setPlaceholder("Shift")
-						.onChange(value => {
-							shortcut.key = value;
-							this.plugin.saveSettings();
+						.setTooltip(shortcut.key)
+						.setButtonText("change key")
+						.onClick(() => {
+
 						})
 				})
 				.addButton(component => {
