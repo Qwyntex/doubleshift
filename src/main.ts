@@ -37,6 +37,10 @@ export default class Doubleshift extends Plugin {
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.refreshCommands();
+	}
+
+	refreshCommands() {
 		// @ts-ignore
 		this.commands = Object.values(this.app.commands.commands);
 	}

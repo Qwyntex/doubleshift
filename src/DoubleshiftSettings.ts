@@ -16,6 +16,9 @@ export class DoubleshiftSettings extends PluginSettingTab {
 	}
 
 	display(): void {
+
+		this.plugin.refreshCommands();
+
 		let { containerEl } = this;
 
 		containerEl.empty();
