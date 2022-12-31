@@ -2,6 +2,7 @@ import Doubleshift, {findCommand} from "./main";
 import {commandSuggestion} from "./CommandSuggestion";
 import {App, Command, PluginSettingTab, Setting} from "obsidian";
 import {ShortcutCreator} from "./Shortcut";
+import {KeySelector} from "./KeySelector";
 
 export class DoubleshiftSettings extends PluginSettingTab {
 
@@ -47,7 +48,8 @@ export class DoubleshiftSettings extends PluginSettingTab {
 						.setTooltip(shortcut.key)
 						.setButtonText("change key")
 						.onClick(() => {
-
+							let sel = new KeySelector(this.app, this.plugin, shortcut);
+							sel.open();
 						})
 				})
 				.addButton(component => {
