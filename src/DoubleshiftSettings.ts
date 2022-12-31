@@ -36,6 +36,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
+			.setHeading()
 			.setName("Shortcuts")
 			.setDesc("all shortcuts you have currently set up")
 			.setHeading()
@@ -45,8 +46,8 @@ export class DoubleshiftSettings extends PluginSettingTab {
 			let s = new Setting(containerEl)
 				.addButton(component => {
 					component
-						.setTooltip(shortcut.key)
-						.setButtonText("change key")
+						.setTooltip("change key")
+						.setButtonText(shortcut.key)
 						.onClick(() => {
 							let sel = new KeySelector(this.app, this.plugin, shortcut);
 							sel.open();
