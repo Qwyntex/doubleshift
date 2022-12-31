@@ -47,7 +47,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 				.addButton(component => {
 					component
 						.setTooltip("change key")
-						.setButtonText(shortcut.key)
+						.setButtonText(shortcut.key === " " ? "Space" : shortcut.key)
 						.onClick(() => {
 							let sel = new KeySelector(this.app, this.plugin, shortcut);
 							sel.open();

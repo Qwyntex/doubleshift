@@ -25,7 +25,7 @@ export class KeySelector extends Modal{
 		instructionEl.style.fontSize = '12px';
 
 		let shiftEl = document.createElement('h1');
-		shiftEl.textContent = this.shortcut.key.toUpperCase();
+		shiftEl.textContent = this.shortcut.key === " " ? "SPACE" : this.shortcut.key.toUpperCase();
 		shiftEl.style.textAlign = 'center';
 		shiftEl.style.paddingTop = '50px';
 		shiftEl.style.paddingBottom = '50px';
@@ -34,13 +34,14 @@ export class KeySelector extends Modal{
 		buttonEl.textContent = 'Save';
 		buttonEl.style.display = 'block';
 		buttonEl.style.margin = '0 auto';
+		buttonEl.tabIndex = -1; // prevent closing the modal if Space or Enter is being pressed
 		buttonEl.addEventListener('click', () => this.save());
 
 		contentEl.appendChild(instructionEl);
 		contentEl.appendChild(shiftEl);
 		contentEl.appendChild(buttonEl);
 
-		document.addEventListener('keyup', (event) => this.detectKeypress(event, shiftEl));
+		document.addEventListener('keydown', (event) => this.detectKeypress(event, shiftEl));
 	}
 
 	save() {
@@ -53,7 +54,7 @@ export class KeySelector extends Modal{
 	}
 
 	detectKeypress(event: KeyboardEvent, element: HTMLElement) {
-		element.textContent = event.key.toUpperCase();
+		element.textContent = event.key === " " ? "SPACE" : event.key.toUpperCase();
 		this.key = event.key;
 	}
 
@@ -62,7 +63,7 @@ export class KeySelector extends Modal{
 		let buttonEl = contentEl.querySelector('button');
 		let shiftEl = contentEl.querySelector('h1');
 		buttonEl.removeEventListener('click', () => this.save());
-		document.removeEventListener('keyup', (event) => this.detectKeypress(event, shiftEl));
+		document.removeEventListener('keydown', (event) => this.detectKeypress(event, shiftEl));
 		contentEl.empty();
 	}
 }
