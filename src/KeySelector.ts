@@ -44,10 +44,7 @@ export class KeySelector extends Modal{
 		document.addEventListener('keydown', (event) => this.detectKeypress(event, shiftEl));
 	}
 
-	save() {
-		console.log('saved', this.key);
-
-		this.shortcut.key = this.key;
+	save() {		this.shortcut.key = this.key;
 		this.plugin.saveSettings();
 		this.plugin.settingsTab.display();
 		this.close();
