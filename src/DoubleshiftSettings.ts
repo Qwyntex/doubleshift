@@ -1,4 +1,4 @@
-import Doubleshift, {findCommand} from "./main";
+import Doubleshift, {findCommand, formatKeyForDisplay} from "./main";
 import {commandSuggestion} from "./CommandSuggestion";
 import {App, Command, PluginSettingTab, Setting} from "obsidian";
 import {ShortcutCreator} from "./Shortcut";
@@ -50,7 +50,7 @@ export class DoubleshiftSettings extends PluginSettingTab {
 				.addButton(component => {
 					component
 						.setTooltip("change key")
-						.setButtonText(shortcut.key === " " ? "Space" : shortcut.key)
+						.setButtonText(formatKeyForDisplay(shortcut.key))
 						.onClick(() => {
 							let sel = new KeySelector(this.app, this.plugin, shortcut);
 							sel.open();

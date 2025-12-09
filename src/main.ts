@@ -8,6 +8,31 @@ interface Settings {
 	shortcuts: Shortcut[];
 }
 
+export function formatKeyForDisplay(code: string): string {
+	if (code === " " || code === "Space") return "Space";
+
+	const modifierPattern = /^(Shift|Control|Meta|Alt)(Left|Right)$/;
+	const match = code.match(modifierPattern);
+
+	if (match) return `${match[1]} ${match[2]}`;
+	return code;
+}
+
+export function formatKeyForDisplayUppercase(code: string): string {
+	const formatted = formatKeyForDisplay(code);
+	return formatted === "Space" ? "SPACE" : formatted.toUpperCase();
+}
+
+export function migrateKeyValue(oldKey: string): string {
+	const legacyMapping: Record<string, string> = {
+		"Shift": "ShiftLeft",
+		"Control": "ControlLeft",
+		"Meta": "MetaLeft",
+		"Alt": "AltLeft"
+	};
+	return legacyMapping[oldKey] ?? oldKey;
+}
+
 export function findCommand(a: string): Command{
 	let commands = Object.values(this.app.commands.commands);
 	for (let i = 0; i < commands.length; i++) {
@@ -22,10 +47,10 @@ export function findCommand(a: string): Command{
 
 const DEFAULT_SETTINGS: Partial<Settings> = {
 	delay: 500,
-	key: 'Shift',
+	key: 'ShiftLeft',
 	shortcuts: [new class implements Shortcut {
 		command = 'command-palette:open';
-		key = 'Shift';
+		key = 'ShiftLeft';
 		lastKeyUpTime = Date.now();
 	}]
 }
@@ -36,7 +61,21 @@ export default class Doubleshift extends Plugin {
 	settingsTab: DoubleshiftSettings;
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const loadedSettings = await this.loadData();
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, loadedSettings);
+
+		// Migrate legacy key values
+		if (this.settings.shortcuts) {
+			this.settings.shortcuts.forEach(shortcut => {
+				shortcut.key = migrateKeyValue(shortcut.key);
+			});
+		}
+
+		// Save migrated settings
+		if (loadedSettings) {
+			await this.saveSettings();
+		}
+
 		this.refreshCommands();
 	}
 
@@ -55,12 +94,12 @@ export default class Doubleshift extends Plugin {
 		await this.loadSettings();
 		this.settingsTab = new DoubleshiftSettings(this.app, this, this.commands);
 		this.addSettingTab(this.settingsTab);
-		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.key));
+		this.registerDomEvent(window, 'keyup', (event) => this.doubleshift(event.code));
 	}
 
-	doubleshift(key: string) {
+	doubleshift(code: string) {
 		this.settings.shortcuts.forEach(shortcut => {
-			if (key !== shortcut.key) {
+			if (code !== shortcut.key) {
 				shortcut.lastKeyUpTime = 0;
 				return;
 			}
