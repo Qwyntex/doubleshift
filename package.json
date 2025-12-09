@@ -1,6 +1,6 @@
 {
 	"name": "doubleshift",
-	"version": "2.1.2",
+	"version": "2.3.0",
 	"description": "Open command palette by pressing Shift twice like in IntelliJ and others keys can be configured too",
 	"main": "src/main.js",
 	"scripts": {
