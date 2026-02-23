@@ -1,6 +1,6 @@
 import {App, Modal} from "obsidian";
 import {Shortcut} from "./Shortcut";
-import Doubleshift from "./main";
+import Doubleshift, {formatKeyForDisplayUppercase} from "./main";
 
 export class KeySelector extends Modal{
 
@@ -25,7 +25,7 @@ export class KeySelector extends Modal{
 		instructionEl.style.fontSize = '12px';
 
 		let shiftEl = document.createElement('h1');
-		shiftEl.textContent = this.shortcut.key === " " ? "SPACE" : this.shortcut.key.toUpperCase();
+		shiftEl.textContent = formatKeyForDisplayUppercase(this.shortcut.key);
 		shiftEl.style.textAlign = 'center';
 		shiftEl.style.paddingTop = '50px';
 		shiftEl.style.paddingBottom = '50px';
@@ -51,8 +51,8 @@ export class KeySelector extends Modal{
 	}
 
 	detectKeypress(event: KeyboardEvent, element: HTMLElement) {
-		element.textContent = event.key === " " ? "SPACE" : event.key.toUpperCase();
-		this.key = event.key;
+		element.textContent = formatKeyForDisplayUppercase(event.code);
+		this.key = event.code;
 	}
 
 	onClose() {

@@ -12,7 +12,7 @@ export class ShortcutCreator {
 	constructor(plugin: Doubleshift) {
 		let shortcut = new class implements Shortcut {
 			command = ""
-			key = "Shift";
+			key = "ShiftLeft";
 			lastKeyUpTime = Date.now();
 		}
 		new commandSuggestion(plugin.app, plugin, shortcut);
